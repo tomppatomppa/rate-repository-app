@@ -11,7 +11,7 @@
     "react-native/react-native": true
   },
   "rules": {
-    "react/prop-types": "off",
+    "react/prop-types": "on",
     "react/react-in-jsx-scope": "off"
   }
 }
