@@ -6,23 +6,18 @@ import Tab from './Tab';
 const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     height: 60,
     backgroundColor: theme.colors.primary,
   },
-  flexItemA: {
-    margin: 12,
-  },
-
-  // ...
 });
 
 const AppBar = () => {
   return (
     <View style={styles.flexContainer}>
-      <View style={styles.flexItemA}>
-        <Tab title={'Repositories'} />
-      </View>
+      <Tab title={'Repositories'} navigate={'/'} />
+      <Tab title={'Sign in'} navigate={'/login'} />
     </View>
   );
 };

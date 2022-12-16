@@ -1,11 +1,15 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import { View } from 'react-native';
+import { Link } from 'react-router-native';
 import Text from './Text';
-const Tab = ({ title }) => {
+const Tab = ({ title, navigate }) => {
+  console.log(navigate);
   return (
-    <Pressable onPress={() => console.log(title)}>
-      <Text color="secondary">{title}</Text>
-    </Pressable>
+    <View>
+      <Link to={navigate}>
+        <Text color={'secondary'}>{title}</Text>
+      </Link>
+    </View>
   );
 };
 

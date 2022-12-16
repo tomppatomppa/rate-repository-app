@@ -45,30 +45,35 @@ const styles = StyleSheet.create({
 const RepositoryItem = ({ item }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.flexItemA}>
-        <Image
-          style={styles.tinyLogo}
-          source={{ uri: item.ownerAvatarUrl }}
-        ></Image>
-        <View style={styles.flexItemB}>
-          <Text fontWeight="bold">{item.fullName}</Text>
-          <Text>{item.description}</Text>
-          <Text style={styles.LanguageItem} color="secondary">
-            {item.language}
-          </Text>
-        </View>
-      </View>
+      <Details item={item} />
       <View style={styles.flexItemStats}>
-        <StatsItem value={item.stargazersCount} description="Stars" />
-        <StatsItem value={item.forksCount} description="Forks" />
-        <StatsItem value={item.reviewCount} description="Reviews" />
-        <StatsItem value={item.ratingAverage} description="Rating" />
+        <Stats value={item.stargazersCount} description="Stars" />
+        <Stats value={item.forksCount} description="Forks" />
+        <Stats value={item.reviewCount} description="Reviews" />
+        <Stats value={item.ratingAverage} description="Rating" />
       </View>
     </View>
   );
 };
 
-const StatsItem = ({ value, description }) => {
+const Details = ({ item }) => {
+  return (
+    <View style={styles.flexItemA}>
+      <Image
+        style={styles.tinyLogo}
+        source={{ uri: item.ownerAvatarUrl }}
+      ></Image>
+      <View style={styles.flexItemB}>
+        <Text fontWeight="bold">{item.fullName}</Text>
+        <Text>{item.description}</Text>
+        <Text style={styles.LanguageItem} color="secondary">
+          {item.language}
+        </Text>
+      </View>
+    </View>
+  );
+};
+const Stats = ({ value, description }) => {
   return (
     <View style={styles.StatsItem}>
       <Text fontWeight="bold">{kFormatter(value)} </Text>
