@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 import theme from '../theme';
 import Tab from './Tab';
@@ -6,7 +6,6 @@ import Tab from './Tab';
 const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     height: 60,
     backgroundColor: theme.colors.primary,
@@ -16,8 +15,10 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return (
     <View style={styles.flexContainer}>
-      <Tab title={'Repositories'} navigate={'/'} />
-      <Tab title={'Sign in'} navigate={'/login'} />
+      <ScrollView horizontal>
+        <Tab title={'Repositories'} navigate={'/'} />
+        <Tab title={'Sign in'} navigate={'/login'} />
+      </ScrollView>
     </View>
   );
 };
