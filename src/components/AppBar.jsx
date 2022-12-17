@@ -6,8 +6,8 @@ import Tab from './Tab';
 const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    height: 60,
+    alignItems: 'flex-end',
+    height: 80,
     backgroundColor: theme.colors.primary,
   },
 });

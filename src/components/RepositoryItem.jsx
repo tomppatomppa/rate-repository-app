@@ -6,17 +6,15 @@ import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     marginBottom: 2,
-    backgroundColor: theme.colors.secondary,
     padding: 12,
+    backgroundColor: theme.colors.secondary,
   },
   flexItemA: {
     flexDirection: 'row',
   },
   flexItemB: {
-    flexDirection: 'column',
     justifyContent: 'space-around',
     marginLeft: 12,
     marginBottom: 12,
@@ -26,7 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   StatsItem: {
-    flexDirection: 'column',
     alignItems: 'center',
   },
   tinyLogo: {
