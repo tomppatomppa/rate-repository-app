@@ -3,20 +3,20 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import theme from '../theme';
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
+import * as yup from 'yup';
+const initialValues = {
+  username: '',
+  password: '',
+};
 
+const validationSchema = yup.object().shape({
+  username: yup.string().required('Username is required'),
+  password: yup.string().required('Password is required'),
+});
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
     backgroundColor: theme.colors.secondary,
     padding: 14,
-  },
-  flexInputItem: {
-    padding: 6,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: theme.colors.textSecondary,
-    borderRadius: 3,
-    marginBottom: 12,
   },
   signInButton: {
     backgroundColor: theme.colors.primary,
@@ -31,7 +31,11 @@ const SignIn = () => {
     console.log(values);
   };
   return (
-    <Formik initialValues={{ name: '', password: '' }} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
     </Formik>
   );
@@ -39,13 +43,8 @@ const SignIn = () => {
 const LoginForm = ({ onSubmit }) => {
   return (
     <View style={styles.container}>
+      <FormikTextInput name={'username'} placeholder="username" />
       <FormikTextInput
-        style={styles.flexInputItem}
-        name={'name'}
-        placeholder="name"
-      />
-      <FormikTextInput
-        style={styles.flexInputItem}
         name={'password'}
         placeholder="password"
         secureTextEntry={true}
