@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { ME } from '../graphql/queries';
 
 import theme from '../theme';
 import Tab from './Tab';
@@ -13,11 +15,19 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const { data } = useQuery(ME);
+
+  const user = data.me ? data.me.username : null;
+
   return (
     <View style={styles.flexContainer}>
       <ScrollView horizontal>
         <Tab title={'Repositories'} navigate={'/'} />
-        <Tab title={'Sign in'} navigate={'/login'} />
+        {user ? (
+          <Tab title={'Sign out'} navigate={'/signout'} />
+        ) : (
+          <Tab title={'Sign in'} navigate={'/login'} />
+        )}
       </ScrollView>
     </View>
   );
