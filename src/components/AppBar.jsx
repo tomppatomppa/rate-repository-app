@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { ME } from '../graphql/queries';
 
 import theme from '../theme';
@@ -15,8 +15,11 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery(ME);
+  const { data, loading } = useQuery(ME);
 
+  if (loading) {
+    return <Text>loading</Text>;
+  }
   const user = data.me ? true : false;
 
   return (

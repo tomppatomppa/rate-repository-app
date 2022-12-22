@@ -1,8 +1,10 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet, Pressable } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import theme from '../theme';
 import { kFormatter } from '../utils';
 import Text from './Text';
+import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,19 +39,38 @@ const styles = StyleSheet.create({
     marginTop: 6,
     padding: 4,
   },
+  urlButton: {
+    backgroundColor: theme.colors.primary,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    borderRadius: 2,
+    marginTop: 6,
+    padding: 12,
+  },
 });
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showUrl = '' }) => {
+  const navigate = useNavigate();
+
   return (
-    <View testID="repositoryItem" style={styles.container}>
-      <Details item={item} />
-      <View testID="stats" style={styles.flexItemStats}>
-        <Stats value={item.stargazersCount} description="Stars" />
-        <Stats value={item.forksCount} description="Forks" />
-        <Stats value={item.reviewCount} description="Reviews" />
-        <Stats value={item.ratingAverage} description="Rating" />
+    <Pressable onPress={() => navigate(`/${item.id}`)}>
+      <View testID="repositoryItem" style={styles.container}>
+        <Details item={item} />
+        <View testID="stats" style={styles.flexItemStats}>
+          <Stats value={item.stargazersCount} description="Stars" />
+          <Stats value={item.forksCount} description="Forks" />
+          <Stats value={item.reviewCount} description="Reviews" />
+          <Stats value={item.ratingAverage} description="Rating" />
+        </View>
+        {showUrl && (
+          <Pressable onPress={() => Linking.openURL(showUrl)}>
+            <View style={styles.urlButton}>
+              <Text color={'secondary'}>Open in GitHub</Text>
+            </View>
+          </Pressable>
+        )}
       </View>
-    </View>
+    </Pressable>
   );
 };
 
