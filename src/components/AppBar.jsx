@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   const { data } = useQuery(ME);
 
-  const user = data.me ? data.me.username : null;
+  const user = data.me?.username ? data.me.username : null;
 
   return (
     <View style={styles.flexContainer}>
