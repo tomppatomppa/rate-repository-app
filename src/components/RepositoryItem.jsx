@@ -9,7 +9,7 @@ import * as Linking from 'expo-linking';
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-start',
-    marginBottom: 2,
+    marginBottom: 10,
     padding: 12,
     backgroundColor: theme.colors.secondary,
   },
