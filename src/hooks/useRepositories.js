@@ -7,7 +7,7 @@ const useRepositories = (queryParameters) => {
     variables: { ...queryParameters },
     fetchPolicy: 'cache-and-network',
   });
-
+  console.log(queryParameters);
   return { repositories: data?.repositories, loading };
 };
 
