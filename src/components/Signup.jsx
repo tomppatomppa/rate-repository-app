@@ -66,6 +66,7 @@ const SignUpForm = ({ onSubmit }) => {
     </View>
   );
 };
+
 const SignUpContainer = ({ onSubmit }) => {
   return (
     <Formik
@@ -77,6 +78,7 @@ const SignUpContainer = ({ onSubmit }) => {
     </Formik>
   );
 };
+
 const Signup = () => {
   const navigate = useNavigate();
   const [signIn] = useSignIn();
@@ -90,13 +92,11 @@ const Signup = () => {
           user: { username, password },
         },
       });
-      console.log(username, password);
       signIn({ username, password });
       navigate('/');
     } catch (e) {
       console.log(e);
     }
-    console.log(values);
   };
   return <SignUpContainer onSubmit={onSubmit} />;
 };
