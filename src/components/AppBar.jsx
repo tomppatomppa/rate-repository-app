@@ -32,7 +32,10 @@ const AppBar = () => {
             <Tab title={'Sign out'} navigate={'/signout'} />
           </>
         ) : (
-          <Tab title={'Sign in'} navigate={'/login'} />
+          <>
+            <Tab title={'Sign in'} navigate={'/login'} />
+            <Tab title={'Sign up'} navigate={'/signup'} />
+          </>
         )}
       </ScrollView>
     </View>
