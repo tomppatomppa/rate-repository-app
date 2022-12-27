@@ -4,12 +4,14 @@ const useFilter = () => {
   const [filterValues, setFilterValues] = useState({
     orderBy: 'CREATED_AT',
     orderDirection: 'DESC',
+    searchKeyword: '',
   });
   const [selectedValue, setSelectedValue] = useState();
 
   const setFilter = (filterParams) => {
     if (filterParams === 'DESC' || filterParams === 'ASC') {
       setFilterValues({
+        ...filterValues,
         orderBy: 'RATING_AVERAGE',
         orderDirection: filterParams,
       });
@@ -18,9 +20,13 @@ const useFilter = () => {
       setFilterValues({ ...filterValues, orderBy: filterParams });
     }
     setSelectedValue(filterParams);
+    console.log(filterValues);
   };
 
-  return [{ filterValues, selectedValue }, setFilter];
+  const setKeyword = (keyword) => {
+    setFilterValues({ ...filterValues, searchKeyword: keyword });
+  };
+  return [{ filterValues, selectedValue }, setFilter, setKeyword];
 };
 
 export default useFilter;

@@ -1,13 +1,20 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, TextInput } from 'react-native';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryItem from './RepositoryItem';
 import { Picker } from '@react-native-community/picker';
 
 import useFilter from '../hooks/useFilter';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
+  },
+  searchBar: {
+    alignContent: 'center',
+    marginEnd: 12,
+    marginLeft: 12,
   },
 });
 
@@ -18,6 +25,7 @@ export const RepositoryListContainer = ({
   repositories,
   selectedValue,
   setFilter,
+  setKeyword,
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -29,14 +37,33 @@ export const RepositoryListContainer = ({
       ItemSeparatorComponent={ItemSeparator}
       renderItem={RenderRepositoryItem}
       ListHeaderComponent={
-        <FilterDialog selectedValue={selectedValue} setFilter={setFilter} />
+        <>
+          <FilterDialog
+            selectedValue={selectedValue}
+            setFilter={setFilter}
+            setKeyword={setKeyword}
+          />
+        </>
       }
     />
   );
 };
-const FilterDialog = ({ selectedValue, setFilter }) => {
+const FilterDialog = ({ selectedValue, setFilter, setKeyword }) => {
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [debouncedKeyword] = useDebounce(searchKeyword, 1000);
+
+  useEffect(() => {
+    setKeyword(debouncedKeyword);
+  }, [debouncedKeyword]);
+
   return (
     <View>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="search"
+        value={searchKeyword}
+        onChangeText={(value) => setSearchKeyword(value)}
+      />
       <Picker
         prompt="Select an item..."
         selectedValue={selectedValue}
@@ -50,7 +77,7 @@ const FilterDialog = ({ selectedValue, setFilter }) => {
   );
 };
 const RepositoryList = () => {
-  const [{ filterValues, selectedValue }, setFilter] = useFilter();
+  const [{ filterValues, selectedValue }, setFilter, setKeyword] = useFilter();
 
   const { repositories } = useRepositories(filterValues);
 
@@ -60,6 +87,7 @@ const RepositoryList = () => {
         repositories={repositories}
         selectedValue={selectedValue}
         setFilter={setFilter}
+        setKeyword={setKeyword}
       />
     </View>
   );
