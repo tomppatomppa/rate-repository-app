@@ -5,6 +5,7 @@ const useFilter = () => {
     orderBy: 'CREATED_AT',
     orderDirection: 'DESC',
     searchKeyword: '',
+    first: 3,
   });
   const [selectedValue, setSelectedValue] = useState();
 
@@ -20,7 +21,7 @@ const useFilter = () => {
       setFilterValues({ ...filterValues, orderBy: filterParams });
     }
     setSelectedValue(filterParams);
-    console.log(filterValues);
+    // console.log(filterValues);
   };
 
   const setKeyword = (keyword) => {

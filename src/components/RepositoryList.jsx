@@ -21,33 +21,6 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 const RenderRepositoryItem = ({ item }) => <RepositoryItem item={item} />;
 
-export const RepositoryListContainer = ({
-  repositories,
-  selectedValue,
-  setFilter,
-  setKeyword,
-}) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
-
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={RenderRepositoryItem}
-      ListHeaderComponent={
-        <>
-          <FilterDialog
-            selectedValue={selectedValue}
-            setFilter={setFilter}
-            setKeyword={setKeyword}
-          />
-        </>
-      }
-    />
-  );
-};
 const FilterDialog = ({ selectedValue, setFilter, setKeyword }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [debouncedKeyword] = useDebounce(searchKeyword, 1000);
@@ -76,20 +49,54 @@ const FilterDialog = ({ selectedValue, setFilter, setKeyword }) => {
     </View>
   );
 };
+
+export const RepositoryListContainer = ({
+  repositories,
+  selectedValue,
+  setFilter,
+  setKeyword,
+  onEndReached,
+}) => {
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
+
+  return (
+    <FlatList
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={RenderRepositoryItem}
+      ListHeaderComponent={
+        <FilterDialog
+          selectedValue={selectedValue}
+          setFilter={setFilter}
+          setKeyword={setKeyword}
+        />
+      }
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.3}
+    />
+  );
+};
+
 const RepositoryList = () => {
   const [{ filterValues, selectedValue }, setFilter, setKeyword] = useFilter();
 
-  const { repositories } = useRepositories(filterValues);
+  const { repositories, fetchMore } = useRepositories(filterValues);
+
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  };
 
   return (
-    <View>
-      <RepositoryListContainer
-        repositories={repositories}
-        selectedValue={selectedValue}
-        setFilter={setFilter}
-        setKeyword={setKeyword}
-      />
-    </View>
+    <RepositoryListContainer
+      repositories={repositories}
+      selectedValue={selectedValue}
+      setFilter={setFilter}
+      setKeyword={setKeyword}
+      onEndReached={onEndReach}
+    />
   );
 };
 

@@ -6,11 +6,15 @@ export const GET_REPOSITORIES = gql`
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
     $searchKeyword: String
+    $first: Int
+    $after: String
   ) {
     repositories(
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
+      first: $first
+      after: $after
     ) {
       edges {
         cursor
@@ -18,14 +22,19 @@ export const GET_REPOSITORIES = gql`
           ...RepositoryFields
         }
       }
+      pageInfo {
+        hasNextPage
+        startCursor
+        endCursor
+      }
     }
   }
   ${REPOSITORY_FIELDS}
 `;
 export const GET_REPOSITORY = gql`
-  query ($repositoryId: ID!) {
+  query ($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
           node {
             createdAt
@@ -37,6 +46,10 @@ export const GET_REPOSITORY = gql`
             }
             text
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
       url
