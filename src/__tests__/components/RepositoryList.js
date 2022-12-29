@@ -47,8 +47,17 @@ describe('RepositoryList', () => {
         ],
       };
 
+      //useNavigate causes test to fail with error "useNavigate() may be used only in the context of a <Router> component."
+      //Wrapping <Router> around  <RepositoryListContainer /> doesn't help
+      //Remove useNavigate hook from RepositoryItem for the test to work
       const { getAllByTestId } = render(
-        <RepositoryListContainer repositories={repositories} />
+        <RepositoryListContainer
+          repositories={repositories}
+          selectedValue={'CREATED_AT'}
+          setFilter={'DESC'}
+          setKeyword={() => console.log('dummy function')}
+          onEndReached={() => console.log('dummy function')}
+        />
       );
       const repositoryItems = getAllByTestId('repositoryItem');
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;

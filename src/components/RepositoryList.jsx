@@ -85,7 +85,6 @@ const RepositoryList = () => {
   const { repositories, fetchMore } = useRepositories(filterValues);
 
   const onEndReach = () => {
-    console.log('You have reached the end of the list');
     fetchMore();
   };
 

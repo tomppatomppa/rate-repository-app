@@ -14,7 +14,6 @@ const useRepository = (id) => {
     if (!canFetchMore) {
       return;
     }
-
     fetchMore({
       variables: {
         after: data.repository.reviews.pageInfo.endCursor,

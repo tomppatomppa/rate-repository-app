@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { useParams } from 'react-router-native';
+import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { useNavigate, useParams } from 'react-router-native';
 
 import useRepository from '../hooks/useRepository';
 import theme from '../theme';
@@ -33,12 +33,44 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexShrink: 1,
   },
+  reviewButtons: {
+    flexDirection: 'row',
+    padding: 6,
+
+    alignContent: 'stretch',
+  },
+  buttonNormal: {
+    backgroundColor: theme.colors.primary,
+    padding: 12,
+    borderRadius: 4,
+  },
+  buttonDelete: {
+    backgroundColor: theme.colors.warning,
+    padding: 12,
+    borderRadius: 4,
+    marginLeft: 32,
+  },
 });
 
 export const ItemSeparator = () => <View style={styles.separator} />;
 
-export const ReviewItem = ({ review, showUser = true }) => {
-  const { rating, user, createdAt, text, repository } = review;
+export const ReviewItem = ({ review, showUser = true, onDeleteReview }) => {
+  const navigate = useNavigate();
+  const { id, rating, user, createdAt, text, repository } = review;
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Delete review',
+      'Are you sure you want to delete this review?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => onDeleteReview(id) },
+      ]
+    );
+  };
 
   return (
     <View style={styles.reviewContainer}>
@@ -53,6 +85,19 @@ export const ReviewItem = ({ review, showUser = true }) => {
         </Text>
         <Text color={theme.colors.textSecondary}>{parseDate(createdAt)}</Text>
         <Text>{text}</Text>
+        {!showUser && (
+          <View style={styles.reviewButtons}>
+            <Pressable
+              style={styles.buttonNormal}
+              onPress={() => navigate(`/${repository.id}`)}
+            >
+              <Text color={'secondary'}>View repository</Text>
+            </Pressable>
+            <Pressable style={styles.buttonDelete} onPress={handleDelete}>
+              <Text color={'secondary'}>Delete review</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );

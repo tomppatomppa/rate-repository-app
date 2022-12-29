@@ -52,8 +52,11 @@ const styles = StyleSheet.create({
 const RepositoryItem = ({ item, showUrl = '' }) => {
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate(`/${item.id}`);
+  };
   return (
-    <Pressable onPress={() => navigate(`/${item.id}`)}>
+    <Pressable onPress={handleNavigate}>
       <View testID="repositoryItem" style={styles.container}>
         <Details item={item} />
         <View testID="stats" style={styles.flexItemStats}>

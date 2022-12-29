@@ -10,10 +10,10 @@ import { CREATE_REVIEW } from '../graphql/mutations';
 import { useNavigate } from 'react-router-native';
 
 const initialValues = {
-  repositoryName: 'swr',
-  ownerName: 'zeit',
-  rating: '12',
-  text: 'testing',
+  repositoryName: '',
+  ownerName: '',
+  rating: '',
+  text: '',
 };
 const validationSchema = yup.object().shape({
   ownerName: yup.string().required('repository owner name is required'),

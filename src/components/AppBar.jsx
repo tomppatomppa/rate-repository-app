@@ -22,7 +22,7 @@ const AppBar = () => {
   if (loading) {
     return <Text>loading</Text>;
   }
-  console.log(data);
+
   const user = data?.me ? true : false;
 
   return (
