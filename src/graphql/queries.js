@@ -59,10 +59,34 @@ export const GET_REPOSITORY = gql`
   ${REPOSITORY_FIELDS}
 `;
 export const ME = gql`
-  query {
+  query ($includeReviews: Boolean = false, $first: Int, $after: String) {
     me {
       id
       username
+      reviews(first: $first, after: $after) @include(if: $includeReviews) {
+        edges {
+          cursor
+          node {
+            createdAt
+            id
+            text
+            rating
+            user {
+              id
+              username
+            }
+            repository {
+              name
+              url
+              fullName
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
     }
   }
 `;

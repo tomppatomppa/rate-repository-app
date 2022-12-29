@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const ItemSeparator = () => <View style={styles.separator} />;
+export const ItemSeparator = () => <View style={styles.separator} />;
 
-const ReviewItem = ({ review }) => {
-  const { rating, user, createdAt, text } = review;
+export const ReviewItem = ({ review, showUser = true }) => {
+  const { rating, user, createdAt, text, repository } = review;
 
   return (
     <View style={styles.reviewContainer}>
@@ -48,7 +48,9 @@ const ReviewItem = ({ review }) => {
         </Text>
       </View>
       <View style={styles.reviewContent}>
-        <Text fontWeight={'bold'}>{user.username}</Text>
+        <Text fontWeight={'bold'}>
+          {showUser ? user.username : repository.fullName}
+        </Text>
         <Text color={theme.colors.textSecondary}>{parseDate(createdAt)}</Text>
         <Text>{text}</Text>
       </View>

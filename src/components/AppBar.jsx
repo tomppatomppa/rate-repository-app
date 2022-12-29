@@ -15,12 +15,15 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data, loading } = useQuery(ME);
+  const { data, loading } = useQuery(ME, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   if (loading) {
     return <Text>loading</Text>;
   }
-  const user = data.me ? true : false;
+  console.log(data);
+  const user = data?.me ? true : false;
 
   return (
     <View style={styles.flexContainer}>
@@ -29,6 +32,7 @@ const AppBar = () => {
         {user ? (
           <>
             <Tab title={'Create a review'} navigate={'/review'} />
+            <Tab title={'My Reviews'} navigate={'/myreviews'} />
             <Tab title={'Sign out'} navigate={'/signout'} />
           </>
         ) : (

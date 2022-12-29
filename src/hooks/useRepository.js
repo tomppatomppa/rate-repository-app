@@ -18,7 +18,7 @@ const useRepository = (id) => {
     fetchMore({
       variables: {
         after: data.repository.reviews.pageInfo.endCursor,
-        variables: { repositoryId: id, first: 3 },
+        variables: { repositoryId: id, first: 5 },
       },
     });
   };
